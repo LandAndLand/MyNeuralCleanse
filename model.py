@@ -2,16 +2,9 @@ import torch
 import torch.nn as nn
 
 
-
-
 def get_model(param):
     if param["model"] == "default":
         return DefaultModel(param["num_classes"])
-
-
-
-
-
 
 
 class DefaultModel(nn.Module):
@@ -53,10 +46,12 @@ class DefaultModel(nn.Module):
         return self.main(x_train)
 
 
-
-def weight_init(layer):  #初始化权重
+def weight_init(layer):  # 初始化权重
     if isinstance(layer, nn.Conv2d):
-        nn.init.xavier_uniform_(layer.weight, gain=nn.init.calculate_gain('relu'))
+        # nn.init.xavier_uniform_(
+        #     layer.weight, gain=nn.init.calculate_gain('relu'))
+        nn.init.xavier_normal_(
+            layer.weight, gain=nn.init.calculate_gain('relu'))
         layer.bias.data.zero_()
     # elif isinstance(m, nn.BatchNorm3d):
     #     m.weight.data.fill_(1)

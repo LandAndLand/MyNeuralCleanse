@@ -23,14 +23,15 @@ def poison(x_train, y_train, param):
         x_train, y_train = _poison_badnet(x_train, y_train, param)
     return x_train, y_train
 
-
+# cifar10的trigger： 5*5
 def _poison_badnet(x_train, y_train, param):
     target_label = param["target_label"]
     for i in range(x_train.shape[0]):
-        for c in range(3):
-            for w in range(3):
-                for h in range(3):
-                    x_train[i][c][-(w+2)][-(h+2)] = 255
+        x_train[i, :, -5:, -5:] = 255
+        # for c in range(3):
+        #     for w in range(3):
+        #         for h in range(3):
+        #             x_train[i][c][-(w+2)][-(h+2)] = 255
         y_train[i] = target_label
     return x_train, y_train
 
